@@ -5,6 +5,7 @@ module.exports = {
   PORT: process.env.PORT || 3008,
   JWT_SECRET: process.env.JWT_SECRET || 'dev_secret_change_me',
   CORS_ORIGIN: process.env.CORS_ORIGIN || '*',
+  LOG_RETENTION_DAYS: Number(process.env.LOG_RETENTION_DAYS || 30),
 
   DB_HOST: process.env.DB_HOST || 'localhost',
   DB_PORT: process.env.DB_PORT || '5432',

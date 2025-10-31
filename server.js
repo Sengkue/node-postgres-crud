@@ -10,6 +10,8 @@ const { notFound, errorHandler } = require('./middleware/error.middleware');
 const logger = require('./utils/logger');
 const fs = require('fs');
 const path = require('path');
+const { auditLogger } = require('./middleware/audit.middleware');
+const { startAuditLogRetention } = require('./tasks/retention.job');
 
 const app = express();
 app.use(helmet());
@@ -27,6 +29,9 @@ app.use(morgan('combined', { stream: accessLogStream }));
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
 
+// Persist audit logs for every request (after basic middlewares, before routes)
+app.use(auditLogger);
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/api', routes);
@@ -37,6 +42,7 @@ async function start() {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
+    startAuditLogRetention();
     app.listen(PORT, () => {
       logger.info({ port: PORT }, 'Server running');
     });

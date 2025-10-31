@@ -9,7 +9,8 @@ const { authRequired } = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-router.use('/users', authRequired, userRoutes);
+router.use('/users', userRoutes);
+// router.use('/users', authRequired, userRoutes);
 router.use('/permissions', permissionsRoutes);
 router.use('/sales', salesRoutes);
 router.use('/reports', reportsRoutes);

@@ -1,6 +1,6 @@
 const UserPermission = require('../models/user_permission.model');
 
-async function requirePermissions(resource, action) {
+function requirePermissions(resource, action) {
   return async (req, res, next) => {
     try {
       const userId = req.user?.id;

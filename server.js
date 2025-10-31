@@ -31,6 +31,9 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/api', routes);
 
+app.use(notFound);
+app.use(errorHandler);
+
 const PORT = config.PORT;
 
 async function start() {
@@ -45,8 +48,5 @@ async function start() {
     process.exit(1);
   }
 }
-
-app.use(notFound);
-app.use(errorHandler);
 
 start();

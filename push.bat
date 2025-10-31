@@ -22,7 +22,7 @@ if errorlevel 1 (
 )
 
 REM Push to the current branch's remote
-git push
+git push origin version01_create_userpermission
 if errorlevel 1 (
   echo [git] Push failed.
   exit /b 1
